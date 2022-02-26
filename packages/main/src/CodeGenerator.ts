@@ -1,0 +1,1 @@
+export type CodeGenerator = () => string;

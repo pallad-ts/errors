@@ -1,0 +1,27 @@
+{
+  "name": "@pallad/errors-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "compiled/index.js",
+  "types": "compiled/index.d.ts",
+  "files": [
+    "compiled"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pallad-ts/errors.git",
+    "directory": "packages/core"
+  },
+  "scripts": {
+    "compile": "../../node_modules/.bin/pallad-scripts compile",
+    "lint": "../../node_modules/.bin/pallad-scripts lint"
+  },
+  "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (https://wookieb.pl)",
+  "license": "MIT",
+  "dependencies": {
+    "predicates": "^2.0.3"
+  }
+}

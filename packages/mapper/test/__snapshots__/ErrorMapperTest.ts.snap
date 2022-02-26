@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorMapper fails if mapping is not a string, function or descriptor 1`] = `"Invalid mapping value of type: \\"undefined\\". Only string, Descriptor and Function allowed"`;
+
+exports[`ErrorMapper fails if mapping is not a string, function or descriptor 2`] = `"Invalid mapping value of type: \\"object\\". Only string, Descriptor and Function allowed"`;
+
+exports[`ErrorMapper fails if mapping is not a string, function or descriptor 3`] = `"Invalid mapping value of type: \\"object\\". Only string, Descriptor and Function allowed"`;
