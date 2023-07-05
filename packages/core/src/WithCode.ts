@@ -1,2 +1,2 @@
-export type WithCode<T> = T & { code: string };
+export type WithCode<T extends Error, TCode extends string = string> = T & { code: TCode };
 

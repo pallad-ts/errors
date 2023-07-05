@@ -1,5 +1,5 @@
 {
-  "name": "@pallad/errors-mapper",
+  "name": "@pallad/errors-dev",
   "version": "1.0.0",
   "description": "",
   "main": "compiled/index.js",
@@ -7,21 +7,22 @@
   "files": [
     "compiled"
   ],
+  "scripts": {
+    "test": "../../node_modules/.bin/pallad-scripts test",
+    "compile": "../../node_modules/.bin/pallad-scripts compile",
+    "lint": "../../node_modules/.bin/pallad-scripts lint"
+  },
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "@pallad/errors-core": "*"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pallad-ts/errors.git",
-    "directory": "packages/core"
-  },
-  "scripts": {
-    "compile": "../../node_modules/.bin/pallad-scripts compile",
-    "lint": "../../node_modules/.bin/pallad-scripts lint"
+    "directory": "packages/dev"
   },
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (https://wookieb.pl)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@pallad/errors": "*"
+  }
 }

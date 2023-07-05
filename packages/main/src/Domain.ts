@@ -1,20 +1,23 @@
 import {incrementNumber} from "./codeGenerators";
-import {Builder} from "./Builder";
+import {ErrorDescriptor} from "./ErrorDescriptor";
+import {ErrorConstructor} from "@pallad/errors-core";
+import {CodeGenerator} from "./CodeGenerator";
+import {MessageFactory} from "./MessageFactory";
 
-export class Domain {
-	readonly errors: Map<string, Descriptor> = new Map();
+export class Domain<TError extends Error = Error> {
+	readonly errors: Map<string, ErrorDescriptor<any, any, any, any>> = new Map();
 
-	private options: Domain.Options;
+	private options: Domain.Options<TError>;
 
-	constructor(options: Partial<Domain.Options> = {}) {
+	constructor(options: Partial<Domain.Options<TError>> = {}) {
 		this.options = {
-			errorClass: options.errorClass ?? Error,
+			errorClass: options.errorClass ?? Error as any,
 			codeGenerator: options.codeGenerator ?? incrementNumber()
 		};
 	}
 
-	static create(options: Partial<Domain.Options> = {}) {
-		return new Domain(options);
+	static create<TError extends Error = Error>(options: Partial<Domain.Options<TError>> = {}) {
+		return new Domain<TError>(options);
 	}
 
 	/**
@@ -31,83 +34,49 @@ export class Domain {
 	 * // or
 	 * throw errors.NOT_FOUND('User not found')
 	 */
-	create(options?: Domain.DescriptorOptions): Descriptor;
-	create(defaultMessage?: string, code?: string | number, defaultExtraProperties?: object): Descriptor;
-	create(defaultMessage?: string | Domain.DescriptorOptions, code?: string | number, defaultExtraProperties?: object): Descriptor {
-
-		let codeCandidate = code;
-		if (defaultMessage !== undefined && typeof defaultMessage === 'object') {
-			codeCandidate = defaultMessage.code;
-		}
+	create<TMessage extends string | MessageFactory<any[]>>(message: TMessage): ErrorDescriptor<TMessage, TError, string, undefined>;
+	create<TMessage extends string | MessageFactory<any[]>,
+		TOptions extends Domain.DescriptorOptions<any>>(
+		message: TMessage,
+		options: TOptions
+	): ErrorDescriptor<TMessage,
+		TOptions['errorClass'] extends undefined ? TError : ErrorConstructor.InferError<TOptions['errorClass']>,
+		string,
+		TOptions['extraProperties']>;
+	create<TMessage extends string | MessageFactory<any[]>,
+		TOptions extends Domain.DescriptorOptions<any>>(
+		message: TMessage,
+		options?: TOptions
+	) {
+		let codeCandidate = options?.code;
 
 		if (codeCandidate !== undefined && this.isTaken(String(codeCandidate))) {
 			throw new Error(`Code "${codeCandidate}" is already taken`);
 		}
 
-		const builderOptions: Builder.Options = {
-			errorClass: this.options.errorClass,
-			code: codeCandidate === undefined ? this.getFreeCode() : String(codeCandidate),
-			message: typeof defaultMessage === 'string' ? defaultMessage : '',
-			extraProperties: defaultExtraProperties ?? undefined
-		};
+		const finalCode = codeCandidate ? String(codeCandidate) : this.getFreeCode();
+		const errorClass = options?.errorClass ?? this.options.errorClass;
+		const extraProperties = options?.extraProperties;
 
-		if (defaultMessage !== undefined && typeof defaultMessage === 'object') {
-			builderOptions.extraProperties = defaultMessage.extraProperties;
-			builderOptions.errorClass = defaultMessage.errorClass || this.options.errorClass;
-			builderOptions.message = defaultMessage.message || '';
-		}
+		const descriptor = new ErrorDescriptor(
+			finalCode,
+			message,
+			errorClass,
+			extraProperties
+		);
 
-		const builder = new Builder(builderOptions);
-
-		const errorFunc: Descriptor = function (message?: string, extraProperties?: object) {
-			return builder
-				.newBuilder()
-				.run(b => {
-					if (message) {
-						b.message(message);
-					}
-				})
-				.run(b => {
-					if (extraProperties) {
-						b.extraProperties(extraProperties);
-					}
-				})
-				.create();
-		} as any;
-
-		errorFunc.defaultMessage = builderOptions.message;
-		errorFunc.defaultExtraProperties = defaultExtraProperties;
-		errorFunc.errorClass = builderOptions.errorClass;
-		errorFunc.code = builderOptions.code;
-
-		errorFunc.builder = () => {
-			return builder.newBuilder();
-		}
-
-		errorFunc.is = (error: any) => {
-			return typeof error === 'object' &&
-				error instanceof builderOptions.errorClass &&
-				error.code === builderOptions.code;
-		};
-
-		errorFunc.format = (...args: any[]) => {
-			return builder.newBuilder()
-				.formatMessage(...args)
-				.create();
-		};
-
-		this.errors.set(builderOptions.code, errorFunc);
-		return errorFunc;
+		this.errors.set(finalCode, descriptor);
+		return descriptor;
 	}
 
-	createErrors<T extends Domain.ErrorsFactory>(factory: T): ReturnType<T> {
+	createErrors<T extends Domain.ErrorsFactory<TError>>(factory: T): ReturnType<T> {
 		return factory(this.create.bind(this)) as ReturnType<T>;
 	}
 
 	/**
 	 * Returns error descriptor for given code
 	 */
-	findErrorDescriptorForCode(code: string): Descriptor | undefined {
+	findErrorDescriptorForCode(code: string): ErrorDescriptor<any, any, any, any> | undefined {
 		return this.errors.get(code);
 	}
 
@@ -128,17 +97,16 @@ export class Domain {
 }
 
 export namespace Domain {
-	export type ErrorsFactory = (createError: Domain['create']) => { [key: string]: Descriptor };
+	export type ErrorsFactory<TError extends Error = Error> = (createError: Domain<TError>['create']) => { [key: string]: ErrorDescriptor<any, any, any, any> };
 
-	export interface Options {
-		errorClass: ErrorConstructor;
+	export interface Options<TErrorConstructor extends Error = Error> {
+		errorClass: ErrorConstructor<TErrorConstructor>;
 		codeGenerator: CodeGenerator;
 	}
 
-	export interface DescriptorOptions {
-		message?: string;
+	export interface DescriptorOptions<TError extends Error = Error> {
 		code?: string,
 		extraProperties?: object
-		errorClass?: ErrorConstructor
+		errorClass?: ErrorConstructor<TError>
 	}
 }

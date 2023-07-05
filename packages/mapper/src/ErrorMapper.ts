@@ -1,5 +1,4 @@
-import {Descriptor, ErrorTypeForDescriptor, ErrorConstructor, WithCode} from '@pallad/errors-core';
-import * as is from 'predicates'
+import {CodeDescriptor, ErrorConstructor, WithCode} from '@pallad/errors-core';
 
 export class ErrorMapper<TResult = never, TDefault = undefined> {
 	private rules: Array<{
@@ -13,14 +12,20 @@ export class ErrorMapper<TResult = never, TDefault = undefined> {
 		code: string,
 		func: TFunc
 	): ErrorMapper<TResult | ReturnType<TFunc>, TDefault>;
-	on<TDescriptor extends Descriptor<any, any>,
+	on<TDescriptor extends CodeDescriptor<any>,
 		TFunc extends (
-			error: ErrorTypeForDescriptor<ErrorConstructor.InferError<TDescriptor['errorClass']>, TDescriptor['extraProperties']>
+			error: WithCode<Error, TDescriptor extends CodeDescriptor<infer TCode> ? TCode : string>
 		) => unknown>(
 		descriptor: TDescriptor,
 		func: TFunc
 	): ErrorMapper<TResult | ReturnType<TFunc>, TDefault>;
 	on<TFunc extends (error: TError) => unknown,
+		TError extends Error = Error>(
+		error: ErrorConstructor<TError>,
+		func: TFunc
+	): ErrorMapper<TResult | ReturnType<TFunc>, TDefault>;
+	on<TDescriptor extends ErrorDe<any>,
+		TFunc extends (error: TError) => unknown,
 		TError extends Error = Error>(
 		error: ErrorConstructor<TError>,
 		func: TFunc
