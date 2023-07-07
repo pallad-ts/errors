@@ -36,7 +36,7 @@ describe('isErrorWithCode', () => {
 
 	it('types', () => {
 		type Input = typeof isErrorWithCode;
-		type Expected = <TCode extends string = string, TError extends Error = Error>(code: TCode, error: TError) => error is WithCode<TError, TCode>;
+		type Expected = <TCode extends string = string, TError = Error>(code: TCode, error: TError) => error is WithCode<TError, TCode>;
 		assert<IsExact<Input, Expected>>(true);
 	});
 });

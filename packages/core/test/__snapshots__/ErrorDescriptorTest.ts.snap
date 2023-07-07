@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorDescriptor useDefaultMessage uses default message if new one is not provided 1`] = `[Error: Default message]`;
+
+exports[`ErrorDescriptor useDefaultMessage uses default message if new one is not provided 2`] = `[Error: Custom message]`;
+
+exports[`ErrorDescriptor useDefaultMessage uses provided error class to construct the error 1`] = `
+CustomError {
+  "tommy": "lee",
+}
+`;
+
+exports[`ErrorDescriptor useDefaultMessage uses provided error class to construct the error 2`] = `
+CustomError {
+  "tommy": "lee",
+}
+`;
+
+exports[`ErrorDescriptor useMessageFormatter uses created message 1`] = `[Error: Hello: bar]`;
+
+exports[`ErrorDescriptor useMessageFormatter uses provided error class to construct the error 1`] = `
+CustomError {
+  "tommy": "lee",
+}
+`;
+
+exports[`ErrorDescriptor withExtraProperties adds extra attributes to created errors 1`] = `
+CustomError {
+  "dadu": "dadu",
+  "foo": "bar",
+  "tommy": "lee",
+}
+`;

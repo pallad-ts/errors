@@ -5,12 +5,14 @@ import {WithCode} from "./WithCode";
 const CHECK = new TypeCheck<CodeDescriptor<any>>('@pallad/errors-core/CodeDescriptor')
 
 export class CodeDescriptor<TCode extends string = string> {
-	is: <TError extends Error = Error>(error: TError) => error is WithCode<TError, TCode>;
+	is: <TError = Error>(error: TError) => error is WithCode<TError, TCode>;
 
-	constructor(readonly code: TCode) {
+	readonly code: TCode;
+
+	constructor(code: TCode) {
+		this.code = code;
 		CHECK.assign(this);
-		this.is = isErrorWithCodeFactory(this.code)
-		Object.freeze(this);
+		this.is = isErrorWithCodeFactory(code)
 	}
 
 	static isType<TCode extends string = string>(value: any): value is CodeDescriptor<TCode> {

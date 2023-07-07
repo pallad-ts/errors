@@ -1,11 +1,11 @@
 {
   "devDependencies": {
-    "@pallad/scripts": "^2.1.2",
-    "@types/faker": "^5.5.9",
-    "faker": "^5.5.3",
-    "lerna": "^4.0.0",
-    "sinon": "^9.2.4",
-    "conditional-type-checks": "^1.0.5"
+    "@faker-js/faker": "^8.0.2",
+    "@pallad/scripts": "^3.0.2",
+    "barrelsby": "^2.8.0",
+    "conditional-type-checks": "^1.0.5",
+    "lerna": "^7",
+    "sinon": "^14"
   },
   "name": "errors"
 }

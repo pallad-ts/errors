@@ -1,6 +1,7 @@
 import {CodeDescriptor} from "@src/CodeDescriptor";
 import {assert, IsExact} from "conditional-type-checks";
 import {WithCode} from "@src/WithCode";
+import {ErrorDescriptor} from "@src/ErrorDescriptor";
 
 describe('CodeDescriptor', () => {
 	const CODE = 'E_1' as const;
@@ -39,7 +40,7 @@ describe('CodeDescriptor', () => {
 
 		it('types', () => {
 			type Input = typeof DESCRIPTOR.is;
-			type Expected = <TError extends Error = Error>(value: TError) => value is WithCode<TError, typeof CODE>;
+			type Expected = <TError = Error>(value: TError) => value is WithCode<TError, typeof CODE>;
 			assert<IsExact<Input, Expected>>(true);
 		});
 	});
@@ -50,6 +51,6 @@ describe('CodeDescriptor', () => {
 
 			expect(CodeDescriptor.isType(instance))
 				.toBe(true);
-		})
-	})
+		});
+	});
 });

@@ -1,4 +1,4 @@
-export interface ErrorConstructor<T extends Error = Error> {
+export interface ErrorConstructor<T = Error> {
 	new(message: string): T;
 }
 

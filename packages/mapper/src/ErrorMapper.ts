@@ -58,9 +58,9 @@ export class ErrorMapper<TResult = never, TDefault = undefined> {
 		throw new Error(`Invalid mapping value of type: "${typeof mapping}". Only string, Descriptor and Function allowed`);
 	}
 
-	onDefault<TFunc extends (error: unknown) => unknown>(func: TFunc): ErrorMapper<TResult, ReturnType<TFunc>> {
+	onDefault<TFunc extends (error: unknown) => unknown>(func: TFunc) {
 		this.onDefaultFunc = func;
-		return this as any;
+		return this as ErrorMapper<TResult, ReturnType<TFunc>>;
 	}
 
 	run(e: unknown): TResult | TDefault {

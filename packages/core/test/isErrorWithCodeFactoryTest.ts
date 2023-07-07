@@ -19,7 +19,7 @@ describe('isErrorWithCodeFactory', () => {
 
 	it('types', () => {
 		type Input = typeof isErrorWithCodeFactory;
-		type Expected = <TCode extends string = string>(code: TCode) => <TError extends Error = Error>(error: TError) => error is WithCode<TError, TCode>;
+		type Expected = <TCode extends string = string>(code: TCode) => <TError = Error>(error: TError) => error is WithCode<TError, TCode>;
 		assert<IsExact<Input, Expected>>(true);
 	});
 });
