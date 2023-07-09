@@ -8,4 +8,10 @@ export class Registry {
 		this.domains.add(domain);
 		return domain;
 	}
+
+	*[Symbol.iterator]() {
+		for (const domain of this.domains) {
+			yield* domain;
+		}
+	}
 }

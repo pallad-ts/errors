@@ -1,8 +1,4 @@
-import {incrementNumber} from "./codeGenerators";
-import {ErrorDescriptor} from "./ErrorDescriptor";
-import {ErrorConstructor} from "@pallad/errors-core";
-import {CodeGenerator} from "./CodeGenerator";
-import {MessageFactory} from "./MessageFactory";
+import {ErrorDescriptor, ErrorConstructor} from "@pallad/errors-core";
 
 export class Domain<TError extends Error = Error> {
 	readonly errors: Map<string, ErrorDescriptor<any, any, any, any>> = new Map();
@@ -12,7 +8,6 @@ export class Domain<TError extends Error = Error> {
 	constructor(options: Partial<Domain.Options<TError>> = {}) {
 		this.options = {
 			errorClass: options.errorClass ?? Error as any,
-			codeGenerator: options.codeGenerator ?? incrementNumber()
 		};
 	}
 
@@ -99,14 +94,7 @@ export class Domain<TError extends Error = Error> {
 export namespace Domain {
 	export type ErrorsFactory<TError extends Error = Error> = (createError: Domain<TError>['create']) => { [key: string]: ErrorDescriptor<any, any, any, any> };
 
-	export interface Options<TErrorConstructor extends Error = Error> {
-		errorClass: ErrorConstructor<TErrorConstructor>;
-		codeGenerator: CodeGenerator;
-	}
-
-	export interface DescriptorOptions<TError extends Error = Error> {
-		code?: string,
-		extraProperties?: object
-		errorClass?: ErrorConstructor<TError>
+	export interface Options {
+		errorClass: ErrorConstructor<any>;
 	}
 }

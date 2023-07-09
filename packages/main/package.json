@@ -27,7 +27,6 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (https://wookieb.pl)",
   "license": "MIT",
   "dependencies": {
-    "@pallad/errors-core": "*",
-    "@pallad/type-check": "^1.1.0"
+    "@pallad/errors-core": "*"
   }
 }

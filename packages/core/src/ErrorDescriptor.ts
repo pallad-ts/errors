@@ -1,8 +1,5 @@
 import {CodeDescriptor} from "./CodeDescriptor";
-import {TypeCheck} from "@pallad/type-check";
 import {ErrorConstructor} from "./ErrorConstructor";
-
-const CHECK = new TypeCheck<ErrorDescriptor<any, any>>('@pallad/errors-core/ErrorDescriptor')
 
 export class ErrorDescriptor<
 	TFactory extends (...args: any[]) => any,
@@ -10,7 +7,6 @@ export class ErrorDescriptor<
 > extends CodeDescriptor<TCode> {
 	constructor(code: TCode, readonly create: TFactory) {
 		super(code);
-		CHECK.assign(this);
 	}
 
 	static useDefaultMessage<
