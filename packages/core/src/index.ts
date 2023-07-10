@@ -6,5 +6,6 @@ export * from "./CodeDescriptor";
 export * from "./ErrorConstructor";
 export * from "./ErrorDescriptor";
 export * from "./WithCode";
+export * from "./getCodeFromError";
 export * from "./isErrorWithCode";
 export * from "./isErrorWithCodeFactory";
