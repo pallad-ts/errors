@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`toThrowErrorWithCode dealing with function fails if error with different code is thrown 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toThrowErrorWithCode([22m[32mexpected[39m[2m)[22m
+
+Expected error with code: C_1
+Received: [31m[Error: Some default message][39m with code: C_2"
+`;
+
+exports[`toThrowErrorWithCode dealing with function fails if function does not throw any error 1`] = `
+"Expected the function to throw an error.
+But it didn't throw anything."
+`;
+
+exports[`toThrowErrorWithCode dealing with promises fails if promise is not rejected 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).[22mrejects[2m.[22mtoThrowErrorWithCode[2m()[22m
+
+Received promise resolved instead of rejected
+Resolved to value: [31m"test"[39m"
+`;
+
+exports[`toThrowErrorWithCode dealing with promises fails if rejected with error with other code 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toThrowErrorWithCode([22m[32mexpected[39m[2m)[22m
+
+Expected error with code: C_1
+Received: [31m[Error: Some default message][39m with code: C_2"
+`;
+
+exports[`toThrowErrorWithCode fails if function or promise is not provided 1`] = `
+"[2mexpect([22m[31mfunction[39m[2m).toThrowWithMessage([22m[32mtype[39m[2m, [22m[32mmessage[39m[2m)[22m
+
+Received value must be a function but instead "1" was found"
+`;

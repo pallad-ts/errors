@@ -13,7 +13,7 @@ export class ErrorsDomain {
 	addErrorDescriptor(errorDescriptor: ErrorDescriptor<any, any>) {
 		const code = errorDescriptor.code;
 		if (this.getErrorDescriptorForCode(code)) {
-			throw new Error(`Error code: ${code} is already used`);
+			throw new Error(`Error code "${code}" is already used`);
 		}
 
 		this.descriptors.set(code, errorDescriptor);

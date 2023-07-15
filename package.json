@@ -7,5 +7,8 @@
     "lerna": "^7",
     "sinon": "^14"
   },
-  "name": "errors"
+  "name": "errors",
+  "workspaces": [
+    "./packages/*"
+  ]
 }

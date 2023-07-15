@@ -1,12 +1,20 @@
 import {CodeDescriptor} from "./CodeDescriptor";
 import {ErrorConstructor} from "./ErrorConstructor";
+import {WithCode} from "./WithCode";
 
 export class ErrorDescriptor<
 	TFactory extends (...args: any[]) => any,
 	TCode extends string = string
 > extends CodeDescriptor<TCode> {
-	constructor(code: TCode, readonly create: TFactory) {
+	constructor(code: TCode, private factory: TFactory) {
 		super(code);
+		Object.freeze(this);
+	}
+
+	create(...args: Parameters<TFactory>): WithCode<ReturnType<TFactory>, TCode> {
+		const result = this.factory(...args);
+		Object.assign(result, {code: this.code});
+		return result;
 	}
 
 	static useDefaultMessage<
