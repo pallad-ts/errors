@@ -4,7 +4,14 @@ exports[`toThrowErrorWithCode dealing with function fails if error with differen
 "[2mexpect([22m[31mreceived[39m[2m).toThrowErrorWithCode([22m[32mexpected[39m[2m)[22m
 
 Expected error with code: C_1
-Received: [31m[Error: Some default message][39m with code: C_2"
+Received: [31m[Error: Some default message 2][39m with code: C_2"
+`;
+
+exports[`toThrowErrorWithCode dealing with function fails if error with different code than provided (multiple) is thrown 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toThrowErrorWithCode([22m[32mexpected[39m[2m)[22m
+
+Expected error with one of following codes: C_1, C_2
+Received: [31m[Error: Some default message 3][39m with code: C_3"
 `;
 
 exports[`toThrowErrorWithCode dealing with function fails if function does not throw any error 1`] = `
@@ -23,7 +30,7 @@ exports[`toThrowErrorWithCode dealing with promises fails if rejected with error
 "[2mexpect([22m[31mreceived[39m[2m).toThrowErrorWithCode([22m[32mexpected[39m[2m)[22m
 
 Expected error with code: C_1
-Received: [31m[Error: Some default message][39m with code: C_2"
+Received: [31m[Error: Some default message 2][39m with code: C_2"
 `;
 
 exports[`toThrowErrorWithCode fails if function or promise is not provided 1`] = `
