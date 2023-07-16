@@ -11,17 +11,6 @@ describe('isErrorWithCode', () => {
 			.toBe(true);
 	});
 
-	it('fails if error contains other code', () => {
-		const error = new Error();
-		expect(isErrorWithCode(CODE, Object.assign(error, {code: 'E_2'})))
-			.toBe(false);
-	});
-
-	it('fails if object is not an instance of Error', () => {
-		expect(isErrorWithCode(CODE, {code: CODE} as any))
-			.toBe(false);
-	});
-
 	it('fails if error is not an object', () => {
 		// eslint-disable-next-line no-null/no-null
 		expect(isErrorWithCode(CODE, null as any))

@@ -1,5 +1,5 @@
-import {ErrorDescriptor} from "@pallad/errors-core";
 import {Domain} from "./Domain";
+import {ErrorDescriptor} from "./ErrorDescriptor";
 
 export class Registry {
 	readonly domains = new Set<Domain>();
@@ -8,8 +8,7 @@ export class Registry {
 		const domain = new Domain();
 
 		this.addDomain(domain);
-		domain.addErrorsDescriptorsMap(descriptors);
-		return [descriptors, domain] as const;
+		return [domain.addErrorsDescriptorsMap(descriptors), domain] as const;
 	}
 
 	addDomain(domain: Domain) {

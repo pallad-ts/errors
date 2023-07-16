@@ -7,6 +7,8 @@ describe('Domain', () => {
 		domain = new Domain();
 	})
 	describe('adding error descriptor', () => {
+		it.todo('success', () => {
 
+		});
 	});
 });

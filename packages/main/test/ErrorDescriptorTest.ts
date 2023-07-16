@@ -29,13 +29,13 @@ describe('ErrorDescriptor', () => {
 		describe('types', () => {
 			it('with default error class', () => {
 				type Input = ReturnType<typeof descriptor['create']>;
-				type Expected = Error;
+				type Expected = WithCode<Error, 'C_1'>;
 				assert<IsExact<Input, Expected>>(true);
 			});
 
 			it('with custom error class', () => {
 				type Input = ReturnType<(typeof descriptorWithCustomError)['create']>;
-				type Expected = CustomError;
+				type Expected = WithCode<CustomError, 'C_2'>;
 				assert<IsExact<Input, Expected>>(true);
 			});
 		});
@@ -64,13 +64,13 @@ describe('ErrorDescriptor', () => {
 			describe('returned error', () => {
 				it('with default error class', () => {
 					type Input = ReturnType<typeof descriptor['create']>;
-					type Expected = Error;
+					type Expected = WithCode<Error, 'C_1'>;
 					assert<IsExact<Input, Expected>>(true);
 				});
 
 				it('with custom error class', () => {
 					type Input = ReturnType<(typeof descriptorWithCustomError)['create']>;
-					type Expected = CustomError;
+					type Expected = WithCode<CustomError, 'C_2'>;
 					assert<IsExact<Input, Expected>>(true);
 				});
 			})

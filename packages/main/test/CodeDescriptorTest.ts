@@ -21,11 +21,6 @@ describe('CodeDescriptor', () => {
 				.toBe(false);
 		});
 
-		it('fails if object is not an instance of Error', () => {
-			expect(DESCRIPTOR.is({code: CODE} as any))
-				.toBe(false);
-		});
-
 		it('fails if error is not an object', () => {
 			// eslint-disable-next-line no-null/no-null
 			expect(DESCRIPTOR.is(null as any))

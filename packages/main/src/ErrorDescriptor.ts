@@ -2,6 +2,9 @@ import {CodeDescriptor} from "./CodeDescriptor";
 import {ErrorConstructor} from "./ErrorConstructor";
 import {WithCode} from "./WithCode";
 import {assignCodeToError} from "./assignCodeToError";
+import {TypeCheck} from '@pallad/type-check';
+
+const TYPE_CHECK = new TypeCheck<ErrorDescriptor<any, any>>('@pallad/errors/ErrorDescriptor');
 
 export class ErrorDescriptor<
 	TFactory extends (...args: any[]) => any,
@@ -9,8 +12,11 @@ export class ErrorDescriptor<
 > extends CodeDescriptor<TCode> {
 	constructor(code: TCode, private factory: TFactory) {
 		super(code);
+		TYPE_CHECK.assign(this);
 		Object.freeze(this);
 	}
+
+	static isType = TYPE_CHECK.isType;
 
 	create(...args: Parameters<TFactory>): WithCode<ReturnType<TFactory>, TCode> {
 		return assignCodeToError(this.code, this.factory(...args));

@@ -2,7 +2,7 @@ import {TypeCheck} from "@pallad/type-check";
 import {isErrorWithCodeFactory} from "./isErrorWithCodeFactory";
 import {WithCode} from "./WithCode";
 
-const CHECK = new TypeCheck<CodeDescriptor<any>>('@pallad/errors-core/CodeDescriptor')
+const CHECK = new TypeCheck<CodeDescriptor<any>>('@pallad/errors/CodeDescriptor')
 
 export class CodeDescriptor<TCode extends string = string> {
 	is: <TError = Error>(error: TError) => error is WithCode<TError, TCode>;

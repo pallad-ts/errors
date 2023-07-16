@@ -1,4 +1,4 @@
-import {CodeDescriptor, getCodeFromError} from "@pallad/errors-core";
+import {CodeDescriptor, getCodeFromError} from "@pallad/errors";
 
 function getExpectedMessageForDescriptors(descriptors: CodeDescriptor[]) {
 	const [firstDescriptor] = descriptors;

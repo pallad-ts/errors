@@ -6,12 +6,14 @@ exports[`ErrorDescriptor useDefaultMessage uses default message if new one is no
 
 exports[`ErrorDescriptor useDefaultMessage uses provided error class to construct the error 1`] = `
 CustomError {
+  "code": "C_2",
   "tommy": "lee",
 }
 `;
 
 exports[`ErrorDescriptor useDefaultMessage uses provided error class to construct the error 2`] = `
 CustomError {
+  "code": "C_2",
   "tommy": "lee",
 }
 `;
@@ -20,12 +22,14 @@ exports[`ErrorDescriptor useMessageFormatter uses created message 1`] = `[Error:
 
 exports[`ErrorDescriptor useMessageFormatter uses provided error class to construct the error 1`] = `
 CustomError {
+  "code": "C_2",
   "tommy": "lee",
 }
 `;
 
 exports[`ErrorDescriptor withExtraProperties adds extra attributes to created errors 1`] = `
 CustomError {
+  "code": "C_10",
   "dadu": "dadu",
   "foo": "bar",
   "tommy": "lee",

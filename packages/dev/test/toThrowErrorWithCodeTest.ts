@@ -1,5 +1,5 @@
 import '@src/index';
-import {ErrorDescriptor} from '@pallad/errors-core';
+import {ErrorDescriptor} from '@pallad/errors';
 
 describe('toThrowErrorWithCode', () => {
 	const descriptor = ErrorDescriptor.useDefaultMessage('C_1', 'Some default message');
@@ -60,8 +60,7 @@ describe('toThrowErrorWithCode', () => {
 			})
 				.toThrowErrorMatchingSnapshot();
 		})
-
-	})
+	});
 
 	describe('dealing with promises', () => {
 		it('passes if rejected with error with proper code', () => {

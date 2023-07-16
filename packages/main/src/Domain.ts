@@ -1,4 +1,7 @@
-import {ErrorDescriptor, getCodeFromError} from "@pallad/errors-core";
+import {ErrorDescriptor} from "./ErrorDescriptor";
+import {getCodeFromError} from "./getCodeFromError";
+import {ERRORS} from "./errors";
+import {de} from "@faker-js/faker";
 
 export class Domain {
 	private descriptors = new Map<string, ErrorDescriptor<any, any>>();
@@ -26,7 +29,7 @@ export class Domain {
 	assertErrorCodeNotRegistered(errorDescriptorOrCode: ErrorDescriptor<any, any> | string) {
 		const code = ErrorDescriptor.isType(errorDescriptorOrCode) ? errorDescriptorOrCode.code : errorDescriptorOrCode;
 		if (this.getErrorDescriptorForCode(code)) {
-			throw new Error(`Error code "${code}" is already registered`);
+			throw ERRORS.CODE_ALREADY_TAKEN(code);
 		}
 	}
 
@@ -46,18 +49,21 @@ export class Domain {
 
 	private assertNotLocked() {
 		if (this.isLocked) {
-			throw new Error('Errors domain is locked and no other error descriptors can be added');
+			throw new Error('Domain is locked and no other error descriptors can be added');
 		}
 	}
 
 	/**
 	 * Adds object with error descriptors to domain
 	 */
-	addErrorsDescriptorsMap(errors: Record<string, ErrorDescriptor<any, any>>) {
-		for (const descriptor of Object.values(errors)) {
+	addErrorsDescriptorsMap<TResult extends Record<string, ErrorDescriptor<any, any>>>(errors: TResult): TResult {
+		for (const [key, descriptor] of Object.entries(errors)) {
+			if (!ErrorDescriptor.isType(descriptor)) {
+				throw ERRORS.INVALID_ERROR_DESCRIPTOR_UNDER_KEY(key);
+			}
 			this.addErrorDescriptor(descriptor);
 		}
-		return this;
+		return errors;
 	}
 
 	getErrorDescriptorForCode(code: string) {
