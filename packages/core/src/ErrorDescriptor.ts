@@ -1,6 +1,7 @@
 import {CodeDescriptor} from "./CodeDescriptor";
 import {ErrorConstructor} from "./ErrorConstructor";
 import {WithCode} from "./WithCode";
+import {assignCodeToError} from "./assignCodeToError";
 
 export class ErrorDescriptor<
 	TFactory extends (...args: any[]) => any,
@@ -12,9 +13,7 @@ export class ErrorDescriptor<
 	}
 
 	create(...args: Parameters<TFactory>): WithCode<ReturnType<TFactory>, TCode> {
-		const result = this.factory(...args);
-		Object.assign(result, {code: this.code});
-		return result;
+		return assignCodeToError(this.code, this.factory(...args));
 	}
 
 	static useDefaultMessage<

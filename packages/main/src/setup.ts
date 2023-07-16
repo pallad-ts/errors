@@ -1,5 +1,5 @@
-import {ErrorsRegistry} from "./ErrorsRegistry";
+import {Registry} from "./Registry";
 
 export * from '@pallad/errors-core';
-export const globalRegistry = new ErrorsRegistry();
+export const globalRegistry = new Registry();
 export const registry = globalRegistry;

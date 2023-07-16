@@ -1,5 +1,6 @@
 import {ErrorDescriptor} from "@src/ErrorDescriptor";
 import {assert, IsExact} from "conditional-type-checks";
+import {WithCode} from "@src/WithCode";
 
 class CustomError {
 	readonly tommy = 'lee';
@@ -41,7 +42,6 @@ describe('ErrorDescriptor', () => {
 	});
 
 	describe('useMessageFormatter', () => {
-
 		const MESSAGE_FORMATTER = (foo: 'bar') => {
 			return `Hello: ${foo}`;
 		};
@@ -94,7 +94,7 @@ describe('ErrorDescriptor', () => {
 
 		it('types', () => {
 			type Input = ReturnType<(typeof descriptor)['create']>;
-			type Expected = CustomError & { foo: 'bar', dadu: 'dadu' };
+			type Expected = WithCode<CustomError & { foo: 'bar', dadu: 'dadu' }, 'C_10'>;
 			assert<IsExact<Input, Expected>>(true);
 		});
 	});
