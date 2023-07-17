@@ -25,11 +25,12 @@ export class Domain {
 	/**
 	 * Asserts that given code is not registered within domain
 	 */
-	assertErrorCodeNotRegistered(errorDescriptorOrCode: ErrorDescriptor<any, any> | string) {
+	assertErrorCodeNotRegistered(errorDescriptorOrCode: ErrorDescriptor<any, any> | string): this {
 		const code = ErrorDescriptor.isType(errorDescriptorOrCode) ? errorDescriptorOrCode.code : errorDescriptorOrCode;
 		if (this.getErrorDescriptorForCode(code)) {
 			throw ERRORS.CODE_ALREADY_TAKEN(code);
 		}
+		return this;
 	}
 
 	/**
@@ -48,7 +49,7 @@ export class Domain {
 
 	private assertNotLocked() {
 		if (this.isLocked) {
-			throw new Error('Domain is locked and no other error descriptors can be added');
+			throw ERRORS.DOMAIN_IS_LOCKED();
 		}
 	}
 

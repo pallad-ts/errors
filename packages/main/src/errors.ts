@@ -9,7 +9,6 @@ function lazyInitialization<TFactory extends (...args: any[]) => any, TDescripto
 	let descriptor: ErrorDescriptor<any>;
 
 	function getDescriptor() {
-		console.trace('How about this?');
 		if (!descriptor) {
 			descriptor = descriptorFactory();
 		}
@@ -19,7 +18,7 @@ function lazyInitialization<TFactory extends (...args: any[]) => any, TDescripto
 	return Object.assign((...args: Parameters<TFactory>) => {
 		return getDescriptor().create(...args);
 	}, {
-		get code() {
+		getCode() {
 			return getDescriptor().code;
 		}
 	})
@@ -27,9 +26,11 @@ function lazyInitialization<TFactory extends (...args: any[]) => any, TDescripto
 
 export const ERRORS = {
 	CODE_ALREADY_TAKEN: lazyInitialization(
-		() => ErrorDescriptor.useMessageFormatter(formatCode(1), (code: string) => {
-			return `Error code "${code}" is already registered`;
-		})
+		() => {
+			return ErrorDescriptor.useMessageFormatter(formatCode(1), (code: string) => {
+				return `Error code "${code}" is already registered`;
+			})
+		}
 	),
 	DOMAIN_IS_LOCKED: lazyInitialization(
 		() => ErrorDescriptor.useDefaultMessage(formatCode(2), 'Domain is locked and no other error descriptors can be added')

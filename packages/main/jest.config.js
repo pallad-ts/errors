@@ -1,4 +1,5 @@
 module.exports = {
 	preset: '@pallad/scripts',
-	setupFilesAfterEnv: ["@pallad/errors-dev"]
+	setupFilesAfterEnv: ["@pallad/errors-dev"],
+	coveragePathIgnorePatterns: ['/compiled/']
 };
