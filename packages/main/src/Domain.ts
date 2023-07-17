@@ -1,7 +1,6 @@
 import {ErrorDescriptor} from "./ErrorDescriptor";
 import {getCodeFromError} from "./getCodeFromError";
 import {ERRORS} from "./errors";
-import {de} from "@faker-js/faker";
 
 export class Domain {
 	private descriptors = new Map<string, ErrorDescriptor<any, any>>();

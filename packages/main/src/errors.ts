@@ -7,12 +7,22 @@ const formatCode = formatCodeFactory('E_PALLAD_ERRORS_%c');
 // Needed to solve circular reference problem where ErrorDescriptor is not yet defined here
 function lazyInitialization<TFactory extends (...args: any[]) => any, TDescriptorFactory extends () => ErrorDescriptor<TFactory, any>>(descriptorFactory: TDescriptorFactory) {
 	let descriptor: ErrorDescriptor<any>;
-	return (...args: Parameters<TFactory>) => {
+
+	function getDescriptor() {
+		console.trace('How about this?');
 		if (!descriptor) {
 			descriptor = descriptorFactory();
 		}
-		return descriptor.create(...args);
+		return descriptor;
 	}
+
+	return Object.assign((...args: Parameters<TFactory>) => {
+		return getDescriptor().create(...args);
+	}, {
+		get code() {
+			return getDescriptor().code;
+		}
+	})
 }
 
 export const ERRORS = {

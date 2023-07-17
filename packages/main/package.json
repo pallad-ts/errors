@@ -17,9 +17,9 @@
   },
   "scripts": {
     "test": "npx pallad-scripts test",
-    "compile": "npx generate-barrels && ../../node_modules/.bin/pallad-scripts compile",
+    "compile": "npm run generate-barrels && ../../node_modules/.bin/pallad-scripts compile",
     "lint": "npx pallad-scripts lint",
-    "generate-barrels": "npx run barrelsby -l all --delete -d ./src"
+    "generate-barrels": "npx barrelsby -l all --delete -d ./src"
   },
   "bugs": {
     "url": "https://github.com/pallad-ts/errors/issues"
@@ -28,7 +28,9 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (https://wookieb.pl)",
   "license": "MIT",
   "dependencies": {
-    "@pallad/errors-core": "*",
     "@pallad/type-check": "^1.2.0"
+  },
+  "devDependencies": {
+    "@pallad/errors-dev": "*"
   }
 }

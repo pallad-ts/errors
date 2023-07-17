@@ -1,5 +1,4 @@
-import {Registry} from "../src";
-import {ErrorDescriptor} from "@pallad/errors-core";
+import {Registry, ErrorDescriptor} from "../src";
 
 const registry = new Registry();
 
