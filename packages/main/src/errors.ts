@@ -1,8 +1,15 @@
 import {ErrorDescriptor} from "./ErrorDescriptor";
-import {formatCodeFactory, PLACEHOLDER_TOKEN} from "./formatCodeFactory";
+import {CodeFormatter, formatCodeFactory, PLACEHOLDER_TOKEN} from "./formatCodeFactory";
 
+let formatter: CodeFormatter;
 
-const formatCode = formatCodeFactory('E_PALLAD_ERRORS_%c');
+function formatCode(code: number) {
+	if (!formatter) {
+		formatter = formatCodeFactory('E_PALLAD_ERRORS_%c');
+	}
+
+	return formatter(code);
+}
 
 // Needed to solve circular reference problem where ErrorDescriptor is not yet defined here
 function lazyInitialization<TFactory extends (...args: any[]) => any, TDescriptorFactory extends () => ErrorDescriptor<TFactory, any>>(descriptorFactory: TDescriptorFactory) {
@@ -33,7 +40,7 @@ export const ERRORS = {
 		}
 	),
 	DOMAIN_IS_LOCKED: lazyInitialization(
-		() => ErrorDescriptor.useDefaultMessage(formatCode(2), 'Domain is locked and no other error descriptors can be added')
+		() => ErrorDescriptor.useDefaultMessage(formatCode(2), 'Domain was registered in registry and is now locked. No other error descriptors can be added')
 	),
 	ERROR_FROZEN: lazyInitialization(
 		() => ErrorDescriptor.useDefaultMessage(formatCode(3), 'Cannot assign "code" property to frozen error object')

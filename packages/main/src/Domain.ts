@@ -4,8 +4,7 @@ import {ERRORS} from "./errors";
 
 export class Domain {
 	private descriptors = new Map<string, ErrorDescriptor<any, any>>();
-
-	private isLocked = false;
+	private stateIsFree = true;
 
 	isErrorFromDomain(error: unknown) {
 		const code = getCodeFromError(error);
@@ -18,8 +17,12 @@ export class Domain {
 	 * Locks entire domain. That means no further error descriptors could be added to it
 	 */
 	lock() {
-		this.isLocked = true;
+		this.stateIsFree = false;
 		return this;
+	}
+
+	isFree() {
+		return this.stateIsFree;
 	}
 
 	/**
@@ -48,7 +51,7 @@ export class Domain {
 	}
 
 	private assertNotLocked() {
-		if (this.isLocked) {
+		if (!this.stateIsFree) {
 			throw ERRORS.DOMAIN_IS_LOCKED();
 		}
 	}

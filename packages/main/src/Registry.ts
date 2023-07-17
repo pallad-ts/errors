@@ -2,7 +2,7 @@ import {Domain} from "./Domain";
 import {ErrorDescriptor} from "./ErrorDescriptor";
 
 export class Registry {
-	readonly domains = new Set<Domain>();
+	private domains = new Set<Domain>();
 
 	createDomainWithDescriptorsMap<TResult extends Record<string, ErrorDescriptor<any, any>>>(descriptors: TResult) {
 		const domain = new Domain();
@@ -22,6 +22,10 @@ export class Registry {
 		return this;
 	}
 
+	hasDomain(domain: Domain) {
+		return this.domains.has(domain);
+	}
+
 	assertErrorCodeNotRegistered(errorDescriptorOrCode: ErrorDescriptor<any, any> | string) {
 		for (const domain of this.domains.values()) {
 			domain.assertErrorCodeNotRegistered(errorDescriptorOrCode);
@@ -29,10 +33,14 @@ export class Registry {
 	}
 
 	getErrorDescriptorForCode(code: string) {
+		return this.getDomainForCode(code)?.getErrorDescriptorForCode(code);
+	}
+
+	getDomainForCode(code: string) {
 		for (const domain of this.domains) {
 			const descriptor = domain.getErrorDescriptorForCode(code);
 			if (descriptor) {
-				return descriptor;
+				return domain;
 			}
 		}
 	}

@@ -72,7 +72,8 @@ describe('Domain', () => {
 	describe('locking', () => {
 		it('once locked no new error descriptors can be added', () => {
 			domain.lock();
-
+			expect(domain.isFree())
+				.toBe(false);
 			expect(() => {
 				domain.addErrorDescriptor(descriptor)
 			})

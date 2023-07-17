@@ -8,6 +8,8 @@ function getExpectedMessageForDescriptors(descriptors: CodeDescriptor[]) {
 	return 'Expected error ' + suffix;
 }
 
+
+// TODO add toThrowErrorWithCodeAndMessage
 expect.extend({
 	toThrowErrorWithCode(this: jest.MatcherUtils, received: unknown, ...codeOrDescriptor: Array<string | CodeDescriptor>) {
 		const isFromReject = this && this.promise === 'rejects';
