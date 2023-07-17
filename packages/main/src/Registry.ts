@@ -7,8 +7,9 @@ export class Registry {
 	createDomainWithDescriptorsMap<TResult extends Record<string, ErrorDescriptor<any, any>>>(descriptors: TResult) {
 		const domain = new Domain();
 
+		const errorDescriptors = domain.addErrorsDescriptorsMap(descriptors)
 		this.addDomain(domain);
-		return [domain.addErrorsDescriptorsMap(descriptors), domain] as const;
+		return [errorDescriptors, domain] as const;
 	}
 
 	addDomain(domain: Domain) {
@@ -26,10 +27,11 @@ export class Registry {
 		return this.domains.has(domain);
 	}
 
-	assertErrorCodeNotRegistered(errorDescriptorOrCode: ErrorDescriptor<any, any> | string) {
+	assertErrorCodeNotRegistered(errorDescriptorOrCode: ErrorDescriptor<any, any> | string): this {
 		for (const domain of this.domains.values()) {
 			domain.assertErrorCodeNotRegistered(errorDescriptorOrCode);
 		}
+		return this;
 	}
 
 	getErrorDescriptorForCode(code: string) {
