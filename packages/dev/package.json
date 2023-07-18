@@ -1,6 +1,6 @@
 {
   "name": "@pallad/errors-dev",
-  "version": "0.9.9",
+  "version": "1.0.0",
   "description": "",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -23,6 +23,6 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (https://wookieb.pl)",
   "license": "MIT",
   "dependencies": {
-    "@pallad/errors": "*"
+    "@pallad/errors": "^1.0.0"
   }
 }
