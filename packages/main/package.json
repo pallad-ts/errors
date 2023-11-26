@@ -1,6 +1,6 @@
 {
   "name": "@pallad/errors",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -31,6 +31,6 @@
     "@pallad/type-check": "^1.2.0"
   },
   "devDependencies": {
-    "@pallad/errors-dev": "^1.0.0"
+    "@pallad/errors-dev": "^1.1.0"
   }
 }
