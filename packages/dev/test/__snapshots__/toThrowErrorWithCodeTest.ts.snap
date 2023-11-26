@@ -34,7 +34,7 @@ Received: [31m[Error: Some default message 2][39m with code: C_2"
 `;
 
 exports[`toThrowErrorWithCode fails if function or promise is not provided 1`] = `
-"[2mexpect([22m[31mfunction[39m[2m).toThrowWithMessage([22m[32mtype[39m[2m, [22m[32mmessage[39m[2m)[22m
+"[2mexpect([22m[31mfunction[39m[2m).toThrowErrorWithCode([22m[32mtype[39m[2m, [22m[32mmessage[39m[2m)[22m
 
 Received value must be a function but instead "1" was found"
 `;
